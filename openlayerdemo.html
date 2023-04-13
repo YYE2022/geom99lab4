@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>OpenLayers Tutorials: Display a Popup</title>
+
+    <style>
+      html,
+      body,
+      #map {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        color: #323232;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/css/ol.css" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/build/ol.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ol-mapbox-style@6.1.4/dist/olms.js" type="text/javascript"></script>
+
+    <script src="https://unpkg.com/ol-popup@4.0.0"></script>
+    <link rel="stylesheet" href="https://unpkg.com/ol-popup@4.0.0/src/ol-popup.css" />
+
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script>
+
+      const apiKey = "AAPKb3d9766753d44713a41fb0d4e986bbfazgH9dBWQr5REJ5yBcxzrd86GDccmWn08mgvQDMPIqvXCXyAM-92MeZuPl4vl8xdB";
+
+      const map = new ol.Map({
+        target: "map"
+      });
+
+      map.setView(
+        new ol.View({
+          center: ol.proj.fromLonLat([-79.337,43.8561]),
+          zoom: 10
+        })
+      );
+
+      const basemapId = "ArcGIS:ColoredPencil";
+
+      const trailheadsLayer = new ol.layer.Vector({
+        source: new ol.source.Vector({
+          format: new ol.format.EsriJSON(),
+          url: `https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/MOE/PWQMN/MapServer/1/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&having=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentOnly=false&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=pjson`
+        })
+      });
+
+	  const lineLayer = new ol.layer.Vector({
+          source: new ol.source.Vector({
+		  format: new ol.format.EsriJSON(),
+		  url: `https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/MOE/PWQMN/MapServer/2/query?where=Shape_Length+%3E4000&text=&objectIds=&time=&geometry=&geometryType=esriGeometryPolyline&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&having=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentOnly=false&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=pjson`
+        })
+	  });
+
+
+      olms(map, "https://basemaps-api.arcgis.com/arcgis/rest/services/styles/" + basemapId + "?type=style&token=" + apiKey)
+
+        .then(function (map) {
+          map.addLayer(trailheadsLayer);
+		  map.addLayer(lineLayer);
+		     });
+
+      const popup = new Popup();
+      map.addOverlay(popup);
+
+      map.on("click", (event) => {
+        let Nlevel, Plevel, Clevel;
+
+        const trailheads = map.getFeaturesAtPixel(event.pixel, {
+          layerFilter: (layer) => layer === trailheadsLayer
+        });
+
+        if (trailheads.length > 0) {
+
+          const Nlevel = trailheads[0].get("NITRATES");
+          const Plevel = trailheads[0].get("PHOSPHORUS");
+		  const Clevel = trailheads[0].get("CHLORIDE");
+          popup.show(event.coordinate, `<b>Nitrate</b> Current Level: ${Nlevel}mg/L</br><b>Phosphate</b> Current Level: ${Plevel}mg/L</br><b>Chloride</b> Current Level: ${Clevel}mg/L</br>F Y I: </br>Chloride Danger Threshsold > <b>250 mg/L</b><br>Nitrate Danger Threshold > <b>10 mg/L</b></br>Phosphate Danger Threshold > <b>10 mg/L</b>`);
+
+        } else {
+          popup.hide();
+        }
+
+      });
+
+
+    </script>
+
+  </body>
+</html>
