@@ -13,7 +13,7 @@
 2. Replace the API key in the code, from https://developers.arcgis.com/dashboard/
 3. Replace basemap, center latitude and longitude, zoom level
 **Note: Openlayers uses LonLat, not LatLon
-5. On the ArcGIS REST Services page <a href "https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/MOE/PWQMN/MapServer"></a> , choose a layer, srcoll down to query and generate a geojson format
+5. On the ArcGIS REST Services page https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/MOE/PWQMN/MapServer , choose a layer, srcoll down to query and generate a geojson format
 6. add the layer to the map: replace the link in the code
 7. Edit the pop-up window information to display the water quality data regarding the Chlorides, Nitrates and Phosphates level.
 
