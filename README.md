@@ -5,7 +5,7 @@
 3. open http://localhost:5173/ on the browser
 4. make edit on the main.js(the page from step 3 will automatically refresh 
 
-##Esri plugin OpenLayers
+## Esri plugin OpenLayers
 1. source code from https://developers.arcgis.com/openlayers/layers/add-a-feature-layer-as-geojson/
 2. Replace the API key from https://developers.arcgis.com/dashboard/
 3. Replace basemap, center latitude and longitude, zoom level
