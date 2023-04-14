@@ -47,7 +47,7 @@
 
       const basemapId = "ArcGIS:ColoredPencil";
 
-      const trailheadsLayer = new ol.layer.Vector({
+      const pointsLayer = new ol.layer.Vector({
         source: new ol.source.Vector({
           format: new ol.format.GeoJSON(),
           url: `https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/MOE/PWQMN/MapServer/1/query?where=1%3D1&text=&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&relationParam=&outFields=*&returnGeometry=true&returnTrueCurves=false&maxAllowableOffset=&geometryPrecision=&outSR=&having=&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&historicMoment=&returnDistinctValues=false&resultOffset=&resultRecordCount=&queryByDistance=&returnExtentOnly=false&datumTransformation=&parameterValues=&rangeValues=&quantizationParameters=&featureEncoding=esriDefault&f=geojson`
@@ -65,7 +65,7 @@
       olms(map, "https://basemaps-api.arcgis.com/arcgis/rest/services/styles/" + basemapId + "?type=style&token=" + apiKey)
 
         .then(function (map) {
-          map.addLayer(trailheadsLayer);
+          map.addLayer(pointsLayer);
 		  map.addLayer(lineLayer);
 		     });
 
@@ -75,15 +75,15 @@
       map.on("click", (event) => {
         let Nlevel, Plevel, Clevel;
 
-        const trailheads = map.getFeaturesAtPixel(event.pixel, {
-          layerFilter: (layer) => layer === trailheadsLayer
+        const waterstation = map.getFeaturesAtPixel(event.pixel, {
+          layerFilter: (layer) => layer === pointsLayer
         });
 
-        if (trailheads.length > 0) {
+        if (waterstation.length > 0) {
 
-          const Nlevel = trailheads[0].get("NITRATES");
-          const Plevel = trailheads[0].get("PHOSPHORUS");
-		  const Clevel = trailheads[0].get("CHLORIDE");
+          const Nlevel = waterstation[0].get("NITRATES");
+          const Plevel = waterstation[0].get("PHOSPHORUS");
+		  const Clevel = waterstation[0].get("CHLORIDE");
           popup.show(event.coordinate, `<b>Nitrate</b> Current Level: ${Nlevel}mg/L</br><b>Phosphate</b> Current Level: ${Plevel}mg/L</br><b>Chloride</b> Current Level: ${Clevel}mg/L</br>F Y I: </br>Chloride Danger Threshsold > <b>250 mg/L</b><br>Nitrate Danger Threshold > <b>10 mg/L</b></br>Phosphate Danger Threshold > <b>10 mg/L</b>`);
 
         } else {
