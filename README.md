@@ -1,5 +1,5 @@
 # geom99 lab Technical log
-### April 7
+### April 8, 2023
 ## OpenLayers desktop version
 1. From the link https://openlayers.org/doc/quickstart.html, install Git, Node.js
 2. locate the index.html, main.js, style.css files on my computer
