@@ -9,5 +9,7 @@
 1. source code from https://developers.arcgis.com/openlayers/layers/add-a-feature-layer-as-geojson/
 2. Replace the API key from https://developers.arcgis.com/dashboard/
 3. Replace basemap, center latitude and longitude, zoom level
-4. Edit the pop-up window information to display the water quality data regarding the Chlorides, Nitrates and Phosphates level.
-4. 
+4. On the ArcGIS REST Services page https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/MOE/PWQMN/MapServer , choose a layer, srcoll down to query and generate a geojson format
+5. copy the link and replace it in the code
+6. Edit the pop-up window information to display the water quality data regarding the Chlorides, Nitrates and Phosphates level.
+
