@@ -12,7 +12,7 @@
 1. source code from https://developers.arcgis.com/openlayers/layers/add-a-feature-layer-as-geojson/
 2. Replace the API key in the code, from https://developers.arcgis.com/dashboard/
 3. Replace basemap, multiple basemap format can be found: https://developers.arcgis.com/openlayers/maps/change-the-basemap-layer/ 
-4. center latitude and longitude, zoom level
+4. change the center latitude and longitude, zoom level
 **Note: Openlayers uses LonLat, not LatLon
 5. On the ArcGIS REST Services page https://ws.lioservices.lrc.gov.on.ca/arcgis2/rest/services/MOE/PWQMN/MapServer , choose a layer, srcoll down to query and generate a geojson format
 6. add the layer to the map: replace the link in the code
